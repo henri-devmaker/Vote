@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+ *{
+
+ font-family: sans-serif;
+ 
+ 
+ }
+
+ body{
+
+ background-color: rgb(215, 217, 219);
+
+ }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+<div>
+<h1 style="margin-left: 10px;">Vote no seu candidato</h1>
+
+<p style="color: red; font-size: 15x;">Aperte uma única vez no seu candidato</p>
+
+<div id="Candidato1" onclick="PrimeiroCan()" class="candidato" style="background-color: rgb(255, 255, 255); width: 350px; height: 150px; display: flex; align-items: center; border: 1px solid rgb(193, 193, 193); cursor: pointer;">
+
+<div style="flex: 20%;">    
+<img style="flex: 80%;" width="90px;" src="https://www.ptbahia.org.br/cms/wp-content/uploads/2024/08/foto-lula.png">
+</div>
+<div style="display:grid; flex: 80%;">
+<p style="margin: 2%; color: rgb(0, 0, 0);">LULA</p>
+
+</div>
+<div>
+
+<p id="porcentagem1" style="position: relative; right: 10px; font-size: 30px; background-color: rgb(0, 0, 0); width: 100px; height: 150px; display: flex; align-items: center;justify-content: center; color: aliceblue;" id="porcentagem">%</p>
+
+    </div>
+
+
+
+</div>
+
+
+<div id="Candidato2" class="candidato" onclick="SegundoCan()" style="background-color: rgb(255, 255, 255); width: 350px; height: 150px; display: flex; align-items: center;border: 1px solid rgb(193, 193, 193); cursor: pointer; ">
+
+    <div style="flex: 20%;">    
+    <img style="flex: 80%;" width="90px;" src="https://s2-valor.glbimg.com/Upm2F7pt321gAudxYbb794sVpQI=/0x0:1200x800/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/internal_photos/bs/2024/l/f/BVt27bQBCKgMgGta5nGA/4.png">
+    </div>
+    <div style="display:grid; flex: 80%;">
+    <p style="margin: 2%; color: rgb(0, 0, 0);">PAULINHO</p>
+  
+    </div>
+
+    <p id="porcentagem2" style="position: relative; right: 10px; font-size: 30px; background-color: rgb(0, 0, 0); width: 176px; height: 150px; display: flex; align-items: center;justify-content: center; color: aliceblue;" id="porcentagem">%</p>
+    
+    
+    </div>
+
+    <button style="cursor: pointer;;padding: 14px 16px; margin-top: 4px; margin-left: 10px; color: white; background-color: green; border: none;" onclick="resultado()">Resultado</button>
+    <button style="cursor: pointer;;padding: 14px 16px; margin-top: 4px; margin-left: 10px; color: white; background-color: red; border: none;" onclick="limpar()">Limpar votos</button>
+    <h2 id="Results"></h2>
+    <p id="aviso1" style="margin-left: 10px;color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); border-radius: 5px; padding: 5px; width: 220px; display: none; font-size: 20px;">Votou no candidato 1 !</p>
+    <p id="aviso2" style="margin-left: 10px;color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); border-radius: 5px; padding: 5px; width: 220px; display: none; font-size: 20px;">Votou no candidato 2 !</p>
+
+    </div>
+
+<script>
+
+var candidato1 = 0, candidato2 = 0, total = 0;
+
+function PrimeiroCan(){
+candidato1+=1; 
+localStorage.setItem('can1', candidato1);
+localStorage.setItem('can2', candidato2)
+//$('#aviso1').fadeIn(2000);
+//$('#aviso1').fadeOut(1000);
+setTimeout( function (){ $('#porcentagem1').css({
+
+"background-color": "green"
+
+});
+
+
+},);
+
+setTimeout( function (){ $('#porcentagem1').css({
+
+"background-color": "black"
+
+});
+
+
+},200);
+
+ //$('#porcentagem1').css({
+
+//"background-color": "green"
+
+//});
+
+
+
+
+porcent();
+
+}
+
+
+function SegundoCan(){
+
+candidato2+=1; 
+localStorage.setItem('can1', candidato1);
+localStorage.setItem('can2', candidato2);
+
+//$('#aviso2').fadeIn(2000);
+//$('#aviso2').fadeOut(1000);
+
+setTimeout( function (){ $('#porcentagem2').css({
+
+"background-color": "green"
+
+});
+
+
+},);
+
+setTimeout( function (){ $('#porcentagem2').css({
+
+"background-color": "black"
+
+});
+
+
+},200);
+
+
+porcent();
+}
+
+function resultado(){
+    
+
+var Can1 = localStorage.getItem('can1');
+var Can2 = localStorage.getItem('can2');
+
+if(Can1 > Can2){
+    document.getElementById('Results').innerHTML="Candidato 1 ganhou com " + Can1 + " votos";
+}else if(Can1 < Can2){
+    document.getElementById('Results').innerHTML="Candidato 2 ganhou com " + Can2 + " votos";
+}else{
+
+ document.getElementById('Results').innerHTML="Empate"
+}
+
+porcent();
+
+};
+
+function limpar(){
+ 
+    localStorage.clear('can1');
+    localStorage.clear('can2');
+    candidato1 = 0;
+    candidato2 = 0;
+
+    document.getElementById('porcentagem1').innerHTML="%";
+    document.getElementById('porcentagem2').innerHTML="%";
+    document.getElementById('Results').innerHTML="";
+}
+
+function porcent(){
+
+var valor1 = parseFloat(localStorage.getItem('can1'));
+var valor2 = parseFloat(localStorage.getItem('can2'));
+total = valor1 + valor2;
+var x = (100*valor1)/total;
+var y = (100*valor2)/total;
+document.getElementById('porcentagem1').innerHTML=x.toFixed(1) + '%';
+document.getElementById('porcentagem2').innerHTML=y.toFixed(1) + '%';
+console.log(y);
+}
+
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
